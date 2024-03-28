@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import CategoryItem from '../category-item/category-item.componet';
+import CategoryItem from '../category-item/category-item.component';
 import './directory.styles.scss';
 
 const Directory = ({ categories }) => {
