@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Navigation from './routes/navigation/navogation.component';
+import Navigation from './routes/navigation/navigation.component';
 import Home from './routes/home/home.component';
-import SignIn from './sign-in/sign-in.component';
+import SignIn from './routes/sign-in/sign-in.component';
 
 const Shop = () => {
     return <h1>Temporary Shop Route</h1>;
