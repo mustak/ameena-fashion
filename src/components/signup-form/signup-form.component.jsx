@@ -7,7 +7,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
-import './signup-from.styles.scss';
+import './signup-form.styles.scss';
 
 const defaultFormFields = {
     displayName: '',
@@ -66,6 +66,7 @@ const SignupForm = () => {
                     label="Display Name"
                     type="text"
                     name="displayName"
+                    id="suDisplayName"
                     required
                     onChange={handleChange}
                     value={displayName}
@@ -75,6 +76,7 @@ const SignupForm = () => {
                     label="Email"
                     type="email"
                     name="email"
+                    id="suEmail"
                     required
                     onChange={handleChange}
                     value={email}
@@ -84,6 +86,7 @@ const SignupForm = () => {
                     label="Password"
                     type="password"
                     name="password"
+                    id="suPassword"
                     required
                     onChange={handleChange}
                     value={password}
@@ -93,13 +96,15 @@ const SignupForm = () => {
                     label="Confirm Password"
                     type="password"
                     name="confirmPassword"
+                    id="suConfirmPassword"
                     required
                     onChange={handleChange}
                     value={confirmPassword}
                 />
 
-                <button type="submit">Sign Up</button>
-                <Button type="submit">Sign Up</Button>
+                <div className="button-group">
+                    <Button type="submit">Sign Up</Button>
+                </div>
             </form>
         </div>
     );
