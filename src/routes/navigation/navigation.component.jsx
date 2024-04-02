@@ -8,7 +8,7 @@ const Navigation = () => {
         <>
             <div className="navigation">
                 <Link to="/" className="logo-container">
-                    <Logo className="logo" /> <span>Ameena&apos;s Fashion</span>
+                    <Logo className="logo" /> <span>Ameena</span>
                 </Link>
                 <div className="nav-links-container">
                     <Link to="/" className="nav-link">
