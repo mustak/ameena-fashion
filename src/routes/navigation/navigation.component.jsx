@@ -21,9 +21,6 @@ const Navigation = () => {
                     <Logo className="logo" /> <span>AMEENA</span>
                 </Link>
                 <div className="nav-links-container">
-                    <Link to="/" className="nav-link">
-                        HOME
-                    </Link>
                     <Link to="/shop" className="nav-link">
                         SHOP
                     </Link>
