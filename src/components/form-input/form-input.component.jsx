@@ -1,22 +1,17 @@
 /* eslint-disable react/prop-types */
-import './form-input.styles.scss';
+import { Group, Input, FormInputLabel } from './form-input.styles';
 
 const FormInput = ({ label, id, ...otherProps }) => {
     return (
-        <div className="group">
-            <input id={id} {...otherProps} className="form-input" />
+        <Group>
+            <Input id={id} {...otherProps} />
 
             {label && (
-                <label
-                    htmlFor={id}
-                    className={`form-input-label ${
-                        otherProps.value.length > 0 ? 'shrink' : null
-                    }`}
-                >
+                <FormInputLabel htmlFor={id} $shrink={otherProps.value.length}>
                     {label}
-                </label>
+                </FormInputLabel>
             )}
-        </div>
+        </Group>
     );
 };
 
