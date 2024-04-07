@@ -1,4 +1,6 @@
-import { useState, useEffect, createContext } from 'react';
+import { useReducer, createContext } from 'react';
+
+import { createAction } from '../utils/reducer/reducer.utils';
 
 const defaultValue = {
     isCartOpen: false,
@@ -27,72 +29,106 @@ const addItemToArray = (arr, item) => {
     return newArray;
 };
 
+const CART_ACTION_TYPES = {
+    TOGGLE_DROPDOWN: 'TOGGLE_DROPDOWN',
+    UPDATE_CART: 'UPDATE_CART',
+};
+
+const INITIAL_STATE = {
+    isCartOpen: false,
+    cartItems: [],
+    cartCount: 0,
+    cartTotal: 0,
+};
+
+const cartReducer = (state, action) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case CART_ACTION_TYPES.TOGGLE_DROPDOWN:
+            return {
+                ...state,
+                isCartOpen: !state.isCartOpen,
+            };
+        case CART_ACTION_TYPES.UPDATE_CART:
+            return {
+                ...state,
+                ...payload,
+            };
+        default:
+            throw new Error(`Unhandled type of ${type} in cartReducer`);
+    }
+};
+
 export const CartContext = createContext(defaultValue);
 
 export const CartProvider = ({ children }) => {
-    const [isCartOpen, setIsCartOpen] = useState(false);
-    const [cartItems, setCartItems] = useState(defaultValue.cartItems);
-    const [cartCount, setCartCount] = useState(0);
-    const [cartTotal, setCartTotal] = useState(0);
+    const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
-    useEffect(() => {
-        const cCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
-        setCartCount(cCount);
-    }, [cartItems]);
-
-    useEffect(() => {
-        const cTotal = cartItems.reduce(
+    const updateCartReducer = (cartItems) => {
+        const cartTotal = cartItems.reduce(
             (acc, curr) => acc + curr.quantity * curr.price,
             0
         );
-        setCartTotal(cTotal);
-    }, [cartItems]);
+        const cartCount = cartItems.reduce(
+            (acc, curr) => acc + curr.quantity,
+            0
+        );
 
-    const toggleDropdown = () => setIsCartOpen(!isCartOpen);
-
-    const addItemToCart = (productToAdd) => {
-        setCartItems(addItemToArray(cartItems, productToAdd));
+        dispatch(
+            createAction(CART_ACTION_TYPES.UPDATE_CART, {
+                cartItems,
+                cartCount,
+                cartTotal,
+            })
+        );
     };
 
-    const incrementQuantity = (id) => {
-        const newArray = [...cartItems];
+    //
+    const toggleDropdown = () =>
+        dispatch(createAction(CART_ACTION_TYPES.TOGGLE_DROPDOWN));
 
-        const foundItem = newArray.find((item) => item.id === id);
+    const addItemToCart = (productToAdd) => {
+        const newCart = addItemToArray(state.cartItems, productToAdd);
+        updateCartReducer(newCart);
+    };
+    const incrementQuantity = (id) => {
+        let newCart = [...state.cartItems];
+
+        const foundItem = newCart.find((item) => item.id === id);
 
         if (foundItem) {
             foundItem.quantity++;
         }
 
-        setCartItems(newArray);
+        updateCartReducer(newCart);
     };
     const decrementQuantity = (id) => {
-        const newArray = [...cartItems];
+        let newCart = [...state.cartItems];
 
-        const foundItem = newArray.find((item) => item.id === id);
+        const foundItem = newCart.find((item) => item.id === id);
 
         if (foundItem) {
             foundItem.quantity--;
         }
-
         if (foundItem.quantity <= 0) {
-            removeItem(id);
-            return;
+            newCart = state.cartItems.filter((item) => item.id !== id);
         }
 
-        setCartItems(newArray);
+        updateCartReducer(newCart);
     };
     const removeItem = (id) => {
-        const newArray = cartItems.filter((item) => item.id !== id);
-        setCartItems(newArray);
+        const newCart = state.cartItems.filter((item) => item.id !== id);
+        updateCartReducer(newCart);
     };
 
     return (
         <CartContext.Provider
             value={{
-                isCartOpen,
-                cartItems,
-                cartCount,
-                cartTotal,
+                isCartOpen: state.isCartOpen,
+                cartItems: state.cartItems,
+                cartCount: state.cartCount,
+                cartTotal: state.cartTotal,
                 toggleDropdown,
                 addItemToCart,
                 incrementQuantity,
