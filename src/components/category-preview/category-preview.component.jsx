@@ -6,7 +6,6 @@ import {
     Title,
     Preview,
 } from './category-preview.styles.jsx';
-import './category-preview.styles.jsx';
 
 const CategoryPreview = ({ category, products }) => {
     // console.log(categoriesMap);
