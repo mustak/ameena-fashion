@@ -1,15 +1,18 @@
-import { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { CartContext } from '../../contexts/cart.context';
-
+import { selectCartCount } from '../../store/cart/cart.selector';
+import { toggleDropdown } from '../../store/cart/cart.actions';
 import { CartIconContainer, ShoppingIcon, ItemCount } from './cart-icon.styles';
 
 const CartIcon = () => {
-    const { toggleDropdown, cartCount } = useContext(CartContext);
-    // const total = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
+    const dispatch = useDispatch();
+
+    const cartCount = useSelector(selectCartCount);
+
+    const toggleDropdownHandler = () => dispatch(toggleDropdown());
 
     return (
-        <CartIconContainer onClick={toggleDropdown}>
+        <CartIconContainer onClick={toggleDropdownHandler}>
             <ShoppingIcon />
             <ItemCount>{cartCount}</ItemCount>
         </CartIconContainer>

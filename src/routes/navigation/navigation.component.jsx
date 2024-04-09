@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
-import { CartContext } from '../../contexts/cart.context';
+
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropDown from '../../components/cart-dropdown/cart-dropdown.component';
@@ -19,7 +18,7 @@ import {
 
 const Navigation = () => {
     const { currentUser } = useSelector((state) => state.user);
-    const { isCartOpen } = useContext(CartContext);
+    const isCartOpened = useSelector(selectIsCartOpen);
 
     return (
         <>
@@ -39,7 +38,7 @@ const Navigation = () => {
 
                     <CartIcon />
                 </NavLinks>
-                {isCartOpen && <CartDropDown />}
+                {isCartOpened && <CartDropDown />}
             </NavigationContainer>
             <Outlet />
         </>
