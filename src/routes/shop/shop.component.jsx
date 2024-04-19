@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setCategories } from '../../store/categories/categories.actions';
-import { getCategorieAndDocs } from '../../utils/firebase/firebase.utils';
 import CategoriesPreview from '../categories-preview/categories-preview.component';
 import Category from '../category/category.component';
+import { getCategorieAndDocs } from '../../utils/firebase/firebase.utils';
+import { setCategories } from '../../store/categories/categories.actions';
 
 import './shop.styles.scss';
 
