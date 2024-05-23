@@ -15,4 +15,7 @@ export default defineConfig({
             '@': resolve(root),
         },
     },
+    // build: {
+    //     commonjsOptions: { transformMixedEsModules: true }, // Change
+    // },
 });

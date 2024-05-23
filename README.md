@@ -66,6 +66,10 @@ const token = credential.accessToken;
 
 # Misc.
 
+## Environment Requirements for Netlify
+
+Precede environment variable names with "VITE\_" to ensure it to be recognisd by Netlify CLI.
+
 ## Authentication Provider
 
 Public-facing name for project: project-299031638173
